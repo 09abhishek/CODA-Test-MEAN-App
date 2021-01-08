@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-4">
+
+      <form (ngSubmit)="onSubmit()" #f="ngForm">
+        <div
+          id="user-data"
+          ngModelGroup="userData"
+          #userData="ngModelGroup">
+
+          <label for="userID">User ID</label>
+          <input type="text"
+                 id="userID"
+                 class="form-control"
+                 ngModel
+                 name="userID"
+                 required>
+
+          <div class="form-group">
+            <label for="pin" style="font-size: 20px">Password</label>
+            <input
+              type="password"
+              id="pin"
+              class="form-control"
+              ngModel
+              name="password"
+              required>
+          </div>
+        </div>
+        <p *ngIf="!userData.valid && userData.touched">Please fill all fields</p>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!f.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+<br>
+<br>
