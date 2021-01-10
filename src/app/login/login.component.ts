@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {PostsService} from '../posts/posts.service';
 import {Router} from '@angular/router';
-
+import {LoginService} from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,23 +9,39 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('f') loginform: NgForm;
-  uname = '';
-  pwd = '';
-  constructor(public postService: PostsService,private router: Router,) { }
+
+  constructor(public loginService: LoginService,
+              private router: Router) {
+  }
+
+  showErrorMsg = false;
 
   ngOnInit() {
   }
-  onSubmit() {
-    this.uname = this.loginform.value.userData.userID.toString();
-    this.pwd = this.loginform.value.userData.password.toString();
 
-    if(this.uname && this.pwd) {
-      this.router.navigateByUrl('/moviePortal');
+  onLogin(form: NgForm) {
+    this.showErrorMsg = false;
+    if (form.valid) {
+      this.loginService.login(form.value.username, form.value.password)
+        .subscribe((data) => {
+          if (data['status']) {
+
+            localStorage.setItem('token', data['accessToken']);
+            localStorage.setItem('user_id', data['result'].user_id);
+            localStorage.setItem('user_name', data['result'].user_name);
+            localStorage.setItem('user_role', data['result'].user_role);
+
+            if (data['result'].user_role == 'administrator') {
+              this.router.navigateByUrl('/adminDashboard');
+            } else {
+              this.router.navigateByUrl('/moviePortal');
+            }
+          } else {
+            this.showErrorMsg = true;
+          }
+        });
     } else {
-      this.router.navigateByUrl('');
+      return;
     }
   }
-
-
 }

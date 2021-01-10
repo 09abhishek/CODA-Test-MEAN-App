@@ -19,6 +19,11 @@ import { MoviesPortalComponent } from './movies-portal/movies-portal.component';
 import { MoviesInfoComponent } from './movies-info/movies-info.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import {AppRoutingModule} from '../app-routing.module';
+import {httpInterceptorProviders} from '../http-interceptor';
+import {NgbRatingModule} from '@ng-bootstrap/ng-bootstrap';
+import {AuthGuard} from './auth.guard';
+import {AdminAuthGuard} from './adminauth.guard';
+
 
 @NgModule({
   declarations: [
@@ -42,9 +47,10 @@ import {AppRoutingModule} from '../app-routing.module';
     MatCardModule,
     MatToolbarModule,
     MatExpansionModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbRatingModule
   ],
-  providers: [PostsService],
+  providers: [PostsService,AuthGuard, AdminAuthGuard, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

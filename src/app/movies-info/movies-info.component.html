@@ -1,3 +1,86 @@
-<p>
-  movies-info works!
-</p>
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title> {{movieDetails.movie_name}}
+    </mat-card-title>
+    <mat-card-subtitle>{{  movieDetails.movie_title}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="movieDetails.image_url" alt="images">
+  <mat-card-content>
+    <p>
+      Description : {{movieDetails.movie_description}}
+    </p>
+    <p>
+      Genre : {{movieDetails.genre}}
+    </p>
+    <p>
+      Cast :{{movieDetails.cast_crew}}
+    </p>
+    <p>
+      Language : {{movieDetails.language}}
+    </p>
+    <p>
+      Release Date : {{movieDetails.release_date}}
+    </p>
+    <p>
+      Ratings : <ngb-rating [max]="5" [(rate)]="movieDetails.avg_ratings" [readonly]="true"></ngb-rating>
+
+    </p>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="addComment()">Comment</button>
+
+    <button mat-button *ngIf="userType == 'administrator'" color="warn" (click)="deleteMovie(movieDetails.movie_id)">Delete</button>
+
+    <button mat-button *ngIf="userType == 'administrator'" color="primary" (click)="editMovie(movieDetails.movie_id)">Edit</button>
+  </mat-card-actions>
+</mat-card>
+
+
+<div *ngIf="showCommentPanel">
+  <mat-card>
+    <form (submit)="onAddComment(commentForm)" #commentForm="ngForm">
+      Star Rating
+      <ngb-rating name="star" [max]="5" [(rate)]="currentUserRate" [readonly]="false" required="true"></ngb-rating>
+      <mat-form-field>
+      <textarea
+        matInput
+        rows="2"
+        ngModel
+        name="comment"
+        required
+        placeholder="Comment"
+        #comment="ngModel">
+      </textarea>
+        <mat-error *ngIf="comment.invalid">Please enter comment!</mat-error>
+      </mat-form-field>
+      <button mat-raised-button
+              type="submit"
+              color="primary">Save
+      </button>
+      <button mat-raised-button
+              type="submit"
+              color="primary" (click)="cancelComment()">Cancel
+      </button>
+    </form>
+
+  </mat-card>
+</div>
+
+
+<mat-accordion multi="true" *ngIf="movieComments.length > 0">
+  <mat-expansion-panel *ngFor="let comment of movieComments">
+    <mat-expansion-panel-header>
+      {{ comment.user_name }}
+    </mat-expansion-panel-header>
+    <p> Comment : {{ comment.description }}</p>
+    <p> rated : {{ comment.star_rating }} Stars</p>
+    <p> Liked : {{ comment.disliked_count }}</p>
+    <p> Disliked {{ comment.liked_count }}</p>
+
+    <button mat-button *ngIf="userType == 'administrator'" color="warn" (click)="deleteComment(comment.comment_id)">Delete</button>
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+<p *ngIf="movieComments.length <= 0">No Comments found!</p>

@@ -1,41 +1,45 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-4">
-
-      <form (ngSubmit)="onSubmit()" #f="ngForm">
-        <div
-          id="user-data"
-          ngModelGroup="userData"
-          #userData="ngModelGroup">
-
-          <label for="userID">User ID</label>
-          <input type="text"
-                 id="userID"
-                 class="form-control"
-                 ngModel
-                 name="userID"
-                 required>
-
-          <div class="form-group">
-            <label for="pin" style="font-size: 20px">Password</label>
+      <mat-toolbar>
+        <span>LOGIN</span>
+      </mat-toolbar>
+      <mat-card>
+        <form (submit)="onLogin(postForm)" #postForm="ngForm">
+          <mat-form-field>
             <input
+              matInput
+              type="text"
+              ngModel
+              name="username"
+              required
+              minlength="1"
+              placeholder="Username"
+              #username="ngModel">
+            <mat-error *ngIf="username.invalid">Please enter username!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
               type="password"
-              id="pin"
-              class="form-control"
               ngModel
               name="password"
-              required>
-          </div>
-        </div>
-        <p *ngIf="!userData.valid && userData.touched">Please fill all fields</p>
-        <button
-          class="btn btn-primary"
-          type="submit"
-          [disabled]="!f.valid">Submit</button>
-      </form>
+              required
+              placeholder="Password"
+              #password="ngModel">
+            <mat-error *ngIf="password.invalid">Please enter password!</mat-error>
+          </mat-form-field>
+          <button mat-raised-button
+                  type="submit"
+                  color="primary">Login
+          </button>
+        </form>
+        <div *ngIf="showErrorMsg"> <p style="color: red"> Login Failed!!</p></div>
+
+      </mat-card>
+
+
     </div>
   </div>
-
 </div>
-<br>
-<br>

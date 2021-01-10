@@ -1,3 +1,128 @@
-<p>
-  admin-dashboard works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-4">
+      <mat-toolbar>
+        <span>Add Movie</span>
+      </mat-toolbar>
+      <mat-card>
+        <form (submit)="onSubmit(movieForm)" #movieForm="ngForm">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="movieName"
+              required
+              minlength="1"
+              placeholder="MovieName"
+              #movieName="ngModel">
+            <mat-error *ngIf="movieName.invalid">Please enter movieName!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="title"
+              required
+              minlength="1"
+              placeholder="Title"
+              #title="ngModel">
+            <mat-error *ngIf="title.invalid">Please enter title!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="description"
+              required
+              minlength="1"
+              placeholder="Description"
+              #description="ngModel">
+            <mat-error *ngIf="description.invalid">Please enter description!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="language"
+              required
+              minlength="1"
+              placeholder="Language"
+              #language="ngModel">
+            <mat-error *ngIf="language.invalid">Please enter language!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="cast"
+              required
+              minlength="1"
+              placeholder="Cast"
+              #cast="ngModel">
+            <mat-error *ngIf="cast.invalid">Please enter cast!</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="genere"
+              required
+              minlength="1"
+              placeholder="Genre"
+              #genere="ngModel">
+            <mat-error *ngIf="genere.invalid">Please enter genere!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="releaseDate"
+              required
+              minlength="1"
+              placeholder="Release Year"
+              #releaseDate="ngModel">
+            <mat-error *ngIf="releaseDate.invalid">Please enter releaseDate!</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              ngModel
+              name="imageURL"
+              required
+              minlength="1"
+              placeholder="Image URL"
+              #imageURL="ngModel">
+            <mat-error *ngIf="imageURL.invalid">Please enter imageURL!</mat-error>
+          </mat-form-field>
+          <button mat-raised-button
+                  type="submit"
+                  color="primary">Submit
+          </button>
+
+          <button mat-raised-button
+                  type="submit"
+                  color="primary" (click)="resetForm(movieForm)">Cancel
+          </button>
+        </form>
+      </mat-card>
+
+
+    </div>
+    <mat-toolbar>
+      <span style="cursor: pointer" (click)="moveToMoviePortal()">Edit/Delete Movie</span>
+    </mat-toolbar>
+  </div>
+</div>
