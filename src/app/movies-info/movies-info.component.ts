@@ -89,7 +89,7 @@ export class MoviesInfoComponent implements OnInit {
   }
 
   resetForm(form) {
-    form.reset();
+    form.resetForm();
     this.currentUserRate = 0;
     this.showCommentPanel = false;
   }

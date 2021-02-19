@@ -18,17 +18,16 @@ router.post('/', function (req, res) {
   let responseObject = [];
   Comment.create(uploadComment).then(result => {
     if (result) {
-      res.status(200).send({
+      res.status(201).send({
         status: true,
         result: 'Record Added Successfully!'
       });
     } else {
-      responseObject = ['Error occurred, Something went wrong!'];
+      res.status(400).send({
+        status: false,
+        result: ['Error occurred, Something went wrong!']
+      });
     }
-    res.json({
-      result: responseObject
-    });
-
   }).catch(e => console.log(e));
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {apiServices} from '../services/api.services';
 import {Router} from '@angular/router';
+import { WebSocketService } from '../services/web-socket.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -11,7 +12,8 @@ import {Router} from '@angular/router';
 export class AdminDashboardComponent implements OnInit {
 
   constructor(private apiService: apiServices,
-              private router: Router) { }
+              private router: Router,
+              private webSocket: WebSocketService) { }
 
   ngOnInit() {
   }
@@ -30,11 +32,12 @@ export class AdminDashboardComponent implements OnInit {
       "image_url" : form.value.imageURL
     }
     if (form.valid) {
+      this.webSocket.emit('send_data', 'User is adding data!!');
       this.apiService.addMovie(uploadMovie)
         .subscribe((data) => {
           if (data['status']) {
             alert(data['result']);
-            form.reset();
+            form.resetForm();
           } else {
             alert(data['result']);
           }
@@ -45,7 +48,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   resetForm(form: NgForm) {
-    form.reset();
+    form.resetForm();
   }
 
   moveToMoviePortal() {

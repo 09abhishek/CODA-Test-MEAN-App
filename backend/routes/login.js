@@ -12,12 +12,16 @@ router.post('/', function (req, res) {
     if (result) {
       user.user_role = result.user_role;
       delete result.dataValues.user_pwd;
-      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {algorithm: 'HS256'});
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {algorithm: 'HS256', expiresIn: "1h"});
+
+      //      res.status(200).json({ //.json is also valid
+      //      3600 is == 1 hr
 
       res.status(200).send({
         status:true,
         result: result,
-        accessToken: accessToken
+        accessToken: accessToken,
+        expiresIn : 3600
       });
     } else {
       res.status(200).send({

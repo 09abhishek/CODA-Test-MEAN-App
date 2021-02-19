@@ -1,9 +1,20 @@
 const express = require('express');
+const socket = require('socket.io');
 const bodyParser = require('body-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const cors = require('cors');
+
+// app.use((req, res, next) => {
+//   res.append('Access-Control-Allow-Origin' , 'http://localhost:4200');
+//   res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.append("Access-Control-Allow-Headers", "Origin, Accept,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+//   res.append('Access-Control-Allow-Credentials', true);
+//   next();
+// });
+
+
 
 const db = require('./backend/database');
 
@@ -22,6 +33,8 @@ const deleteCommentByID = require('./backend/routes/deleteCommentByID');
 const getCommentsByMovie = require('./backend/routes/getCommentsByMovie');
 const addCommentsToMovie = require('./backend/routes/addCommentsToMovie');
 
+const sendProjectInfo = require('./backend/routes/sendProjectInfo');
+
 
 var app = express();
 
@@ -29,6 +42,8 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
+
+// for serving static files like css.
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -89,13 +104,39 @@ app.use('/deleteCommentByID', authenticateToken, adminRoleAuthorization, deleteC
 app.use('/getCommentsByMovie', authenticateToken, getCommentsByMovie);
 app.use('/addCommentsToMovie', authenticateToken, addCommentsToMovie);
 
+app.use('/appInfo', sendProjectInfo)
+
+app.use((req, res, next) => {
+  res.status(404).sendFile(path.join(__dirname, '/backend','views', '404.html'));
+  // res.status(404).send('Invalid Route');
+});
+
+// use try catch block in every DB operation
+
 app.get('/', function (req, res) {
   res.send('login First!');
 })
 
-var server = app.listen(8081, "192.168.0.125", function () {
+// home "192.168.8.91"||
+// office : 192.168.0.127
+
+let server = app.listen(8081,   "192.168.8.91", function () {
   let host = server.address().address
   let port = server.address().port
 
   console.log("app listening at http://%s:%s", host, port)
 })
+const io = socket.listen(server);
+
+io.sockets.on('connection', (socket) => {
+
+  console.log('websocket connected');
+
+ socket.emit('some event', 'LOOOOOL L:O')
+
+  socket.on('send_data', (socket) => {
+    console.log(socket);
+
+ })
+
+});

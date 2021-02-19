@@ -3,11 +3,11 @@
     <span>Movies Rating Zone</span>
     <span class="spacer"></span>
 
-    <!--    <a mat-button routerLink="/register">Movie Portal</a>-->
+    <a *ngIf="userIsAuthenticated" mat-button routerLink="/moviePortal">Movie Portal</a>
 
-    <!--    <a mat-button routerLink="/login">Login</a>-->
+    <a *ngIf="!userIsAuthenticated" mat-button routerLink="/login">Login</a>
 
-    <a mat-button routerLink="/logout" (click)="logout()">Logout</a>
+    <a *ngIf="userIsAuthenticated" mat-button routerLink="/logout" (click)="logout()">Logout</a>
 
   </mat-toolbar-row>
 </mat-toolbar>

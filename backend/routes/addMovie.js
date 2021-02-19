@@ -19,16 +19,16 @@ router.post('/', function (req, res) {
   let responseObject = [];
   Movie.create(uploadMovie).then(result => {
       if (result) {
-        res.status(200).send({
+        res.status(201).send({
           status: true,
           result: 'Record Added Successfully!'
         });
       } else {
-        responseObject = ['Error occurred, Something went wrong!'];
+        res.status(500).send({
+          status: true,
+          result: 'Error occurred, Something went wrong!'
+        });
       }
-      res.json({
-        result: responseObject
-      });
   }).catch(e => console.log(e));
 
 });
