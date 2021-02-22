@@ -1,0 +1,6 @@
+[{"user_id":100, "user_name":"abhi", "name":"Abhishek", "user_pwd":"123456789", "email":"abhi099@ymail.com", "user_role":"administrator", "age":"26", "sex":"Male", "phone_number":"9031203057"},
+ {"user_id":101, "user_name":"ravi", "name":"Ravi", "user_pwd":"99999999", "email":"xyz@email.com", "user_role":"user", "age":"20", "sex":"Male", "phone_number":"9823443317"},
+ {"user_id":102, "user_name":"juhi", "name":"Juhi", "user_pwd":"123456789", "email":"juhi.priya@gmail.com", "user_role":"user", "age":"18", "sex":"Female", "phone_number":"8451415412"},
+ {"user_id":103, "user_name":"megha09", "name":"Megha", "user_pwd":"561645615", "email":"megha@xys.com", "user_role":"user", "age":"14", "sex":"Female", "phone_number":"8265265222"},
+ {"user_id":104, "user_name":"sneha", "name":"Sneha", "user_pwd":"lollypop", "email":"sneha77@gmail.com", "user_role":"user", "age":"19", "sex":"Female", "phone_number":"4125425255"},
+ {"user_id":105, "user_name":"admin", "name":"Administrator", "user_pwd":"admin", "email":"c.tvs@gmail.com", "user_role":"administrator", "age":"30", "sex":"Male", "phone_number":"8456214325"}]
